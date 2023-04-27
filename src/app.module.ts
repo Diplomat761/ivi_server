@@ -19,6 +19,7 @@ import { Group } from "./groups/groups.model";
 import { PostGroups } from "./groups/post-groups.model";
 import { ImagesModule } from "./images/images.module";
 import { Image } from "./images/images.model";
+import { GoogleUser } from "./users/google-users.model";
 
 @Module({
   controllers: [],
@@ -37,7 +38,17 @@ import { Image } from "./images/images.model";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles, Posts, Profile, Group, PostGroups, Image],
+      models: [
+        User,
+        Role,
+        UserRoles,
+        Posts,
+        Profile,
+        Group,
+        PostGroups,
+        Image,
+        GoogleUser,
+      ],
       autoLoadModels: true,
     }),
     UsersModule,
