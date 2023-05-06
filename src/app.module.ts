@@ -20,6 +20,8 @@ import { PostGroups } from "./groups/post-groups.model";
 import { ImagesModule } from "./images/images.module";
 import { Image } from "./images/images.model";
 import { GoogleUser } from "./users/google-users.model";
+import { Movie } from "./movies/movies.model";
+import { MoviesModule } from "./movies/movies.module";
 
 @Module({
   controllers: [],
@@ -48,6 +50,7 @@ import { GoogleUser } from "./users/google-users.model";
         PostGroups,
         Image,
         GoogleUser,
+        Movie,
       ],
       autoLoadModels: true,
     }),
@@ -59,6 +62,7 @@ import { GoogleUser } from "./users/google-users.model";
     ProfilesModule,
     GroupsModule,
     ImagesModule,
+    MoviesModule,
   ],
 })
 export class AppModule {}
