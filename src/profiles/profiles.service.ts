@@ -10,8 +10,6 @@ export class ProfilesService {
   ) {}
 
   async createProfile(dto: createProfileDto) {
-    console.log(dto);
-
     const profile = await this.profileRepository.create(dto);
 
     return profile;

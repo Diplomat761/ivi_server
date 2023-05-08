@@ -1,11 +1,13 @@
-FROM node:14-alpine
+FROM node:18
 
 WORKDIR /app
 
-COPY packege*.json ./
+COPY package*.json ./
 
-RUN npm install 
+RUN npm install
 
-COPY  . .
+COPY . .
+
+COPY ./dist ./dist
 
 CMD ["npm", "run", "start:dev"]
