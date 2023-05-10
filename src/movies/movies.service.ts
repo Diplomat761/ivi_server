@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { createMovieDto } from "./dto/create-movie.dto";
 import { Movie } from "./movies.model";
 import { Op } from "sequelize";
+import { MoviePerson } from "src/person/movie-person.model";
+import { Person } from "src/person/person.model";
 
 @Injectable()
 export class MoviesService {
@@ -10,6 +11,27 @@ export class MoviesService {
 
   async getAllMovies() {
     const movies = await this.movieRepository.findAll();
+    return movies;
+  }
+
+  async getMovieByActor(id: number) {
+    const movies = await this.movieRepository.findAll({
+      include: [
+        {
+          model: Person,
+          as: "actors",
+          where: { id: id },
+          through: { attributes: [] },
+        },
+      ],
+    });
+    return movies;
+  }
+
+  async getMovieByDirector(id: number) {
+    const movies = await this.movieRepository.findAll({
+      where: { director_id: id },
+    });
     return movies;
   }
 
@@ -29,6 +51,16 @@ export class MoviesService {
       movies.push(movie);
     }
     return movies;
+  }
+
+  async createMoviePerson(moviePersonDataList: any[]): Promise<MoviePerson[]> {
+    const moviePersons = [];
+    for (const movieData of moviePersonDataList) {
+      const moviePerson = new MoviePerson(movieData);
+      await moviePerson.save();
+      moviePersons.push(moviePerson);
+    }
+    return moviePersons;
   }
 
   async getСarouselMovie() {

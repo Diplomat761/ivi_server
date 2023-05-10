@@ -1,25 +1,18 @@
 import {
+  BelongsTo,
   BelongsToMany,
   Column,
   DataType,
+  ForeignKey,
   Model,
   Table,
 } from "sequelize-typescript";
+import { MoviePerson } from "src/person/movie-person.model";
 
-interface MovieCreationAttrs {
-  avatars: string;
-  name: string;
-  original_name: string;
-  rating: number;
-  years: string;
-  durations: string;
-  country: string;
-  genre: string;
-  director: string;
-  roles: string;
-}
+import { Person } from "src/person/person.model";
+
 @Table({ tableName: "movies" })
-export class Movie extends Model<Movie, MovieCreationAttrs> {
+export class Movie extends Model<Movie> {
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -52,15 +45,19 @@ export class Movie extends Model<Movie, MovieCreationAttrs> {
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   genre: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
-  director: string;
+  @Column({ type: DataType.TEXT, unique: false, allowNull: false })
+  text: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
-  roles: string;
+  @BelongsToMany(() => Person, () => MoviePerson, "movie_id", "person_id")
+  actors: Person[];
 
-  @Column({ type: DataType.DATE, allowNull: true })
-  createdAt: Date;
+  @ForeignKey(() => Person)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  director_id: number;
 
-  @Column({ type: DataType.DATE, allowNull: true })
-  updatedAt: Date;
+  @BelongsTo(() => Person, "director_id")
+  director: Person;
 }

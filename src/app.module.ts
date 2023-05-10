@@ -22,6 +22,9 @@ import { Image } from "./images/images.model";
 import { GoogleUser } from "./users/google-users.model";
 import { Movie } from "./movies/movies.model";
 import { MoviesModule } from "./movies/movies.module";
+import { PersonModule } from "./person/person.module";
+import { Person } from "./person/person.model";
+import { MoviePerson } from "./person/movie-person.model";
 
 @Module({
   controllers: [],
@@ -51,6 +54,8 @@ import { MoviesModule } from "./movies/movies.module";
         Image,
         GoogleUser,
         Movie,
+        Person,
+        MoviePerson,
       ],
       autoLoadModels: true,
     }),
@@ -63,6 +68,7 @@ import { MoviesModule } from "./movies/movies.module";
     GroupsModule,
     ImagesModule,
     MoviesModule,
+    PersonModule,
   ],
 })
 export class AppModule {}

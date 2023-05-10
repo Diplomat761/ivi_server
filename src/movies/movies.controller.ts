@@ -1,13 +1,23 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
-import { createMovieDto } from "./dto/create-movie.dto";
 import { MoviesService } from "./movies.service";
 
 @Controller("movies")
 export class MoviesController {
   constructor(private movieService: MoviesService) {}
+
   @Get()
   getAll() {
     return this.movieService.getAllMovies();
+  }
+
+  @Get("/actor/:id")
+  getMovieByActor(@Param("id") id: number) {
+    return this.movieService.getMovieByActor(id);
+  }
+
+  @Get("/director/:id")
+  getMovieByDirector(@Param("id") id: number) {
+    return this.movieService.getMovieByDirector(id);
   }
 
   @Get("/film/:id")
@@ -15,9 +25,14 @@ export class MoviesController {
     return this.movieService.getMoviesById(id);
   }
 
-  @Post()
+  @Post("")
   createMovie(@Body() movieDataList: any[]) {
     return this.movieService.createMovie(movieDataList);
+  }
+
+  @Post("/movpers")
+  createMoviePerson(@Body() moviePersonDataList: any[]) {
+    return this.movieService.createMoviePerson(moviePersonDataList);
   }
 
   @Get("/carousel")
