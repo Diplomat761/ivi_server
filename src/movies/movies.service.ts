@@ -67,7 +67,7 @@ export class MoviesService {
     const movies = await this.movieRepository.findAll({
       where: { years: "2023" },
       limit: 5,
-      attributes: ["id", "name", "original_name", "text", "avatars"],
+      attributes: ["id", "name", "original_name", "text", "promo"],
     });
     return movies;
   }
@@ -75,6 +75,17 @@ export class MoviesService {
   async getRecMovie() {
     const movies = await this.movieRepository.findAll({
       where: { country: "США", rating: { [Op.gt]: 8 } },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
       limit: 10,
     });
     return movies;
@@ -84,6 +95,17 @@ export class MoviesService {
     const movies = await this.movieRepository.findAll({
       where: { rating: { [Op.gt]: 9 } },
       limit: 10,
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return movies;
   }
@@ -91,102 +113,273 @@ export class MoviesService {
   async getDrama() {
     const data = await this.movieRepository.findAll({
       where: { genre: "драма" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getСomedy() {
     const data = await this.movieRepository.findAll({
       where: { genre: "комедия" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
-  async getAction() {
-    const data = await this.movieRepository.findAll({
-      where: { genre: "" },
-    });
-    return data;
-  }
+
   async getThriller() {
     const data = await this.movieRepository.findAll({
       where: { genre: "триллер" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getAdventures() {
     const data = await this.movieRepository.findAll({
       where: { genre: "приключения" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getForeign() {
     const data = await this.movieRepository.findAll({
-      where: { genre: "" },
+      where: { country: { [Op.not]: "Россия" } },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getMelodramas() {
     const data = await this.movieRepository.findAll({
       where: { genre: "мелодрама" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getFantastic() {
     const data = await this.movieRepository.findAll({
       where: { genre: "фантастика" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getFantasy() {
     const data = await this.movieRepository.findAll({
       where: { genre: "фэнтези" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getFamily() {
     const data = await this.movieRepository.findAll({
       where: { genre: "семейный" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getDetective() {
     const data = await this.movieRepository.findAll({
       where: { genre: "детектив" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getHorror() {
     const data = await this.movieRepository.findAll({
       where: { genre: "ужасы" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getMilitary() {
     const data = await this.movieRepository.findAll({
       where: { genre: "военный" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getCrime() {
     const data = await this.movieRepository.findAll({
       where: { genre: "криминал" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getWestern() {
     const data = await this.movieRepository.findAll({
       where: { genre: "вестерн" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getBiography() {
     const data = await this.movieRepository.findAll({
       where: { genre: "биография" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }
   async getSport() {
     const data = await this.movieRepository.findAll({
       where: { genre: "спорт" },
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "country",
+        "genre",
+      ],
     });
     return data;
   }

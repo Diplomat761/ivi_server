@@ -60,11 +60,6 @@ export class MoviesController {
     return this.movieService.getСomedy();
   }
 
-  @Get("/collection/genre/action")
-  getAction() {
-    return this.movieService.getAction();
-  }
-
   @Get("/collection/genre/thriller")
   getThriller() {
     return this.movieService.getThriller();

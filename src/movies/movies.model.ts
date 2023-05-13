@@ -25,6 +25,9 @@ export class Movie extends Model<Movie> {
   avatars: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  promo: string;
+
+  @Column({ type: DataType.STRING, unique: false, allowNull: false })
   name: string;
 
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
