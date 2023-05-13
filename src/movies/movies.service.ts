@@ -62,18 +62,19 @@ export class MoviesService {
     }
     return moviePersons;
   }
-
-  async getСarouselMovie() {
+  // БАНЕР ---------------------------------------
+  async getPromoMovie() {
     const movies = await this.movieRepository.findAll({
       where: { years: "2023" },
       limit: 5,
+      attributes: ["id", "name", "original_name", "text", "avatars"],
     });
     return movies;
   }
-
+  // ЛУЧШЕЕ --------------------------------------
   async getRecMovie() {
     const movies = await this.movieRepository.findAll({
-      where: { country: "США" },
+      where: { country: "США", rating: { [Op.gt]: 8 } },
       limit: 10,
     });
     return movies;
@@ -85,5 +86,108 @@ export class MoviesService {
       limit: 10,
     });
     return movies;
+  }
+  // ЖАНРЫ --------------------------------------
+  async getDrama() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "драма" },
+    });
+    return data;
+  }
+  async getСomedy() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "комедия" },
+    });
+    return data;
+  }
+  async getAction() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "" },
+    });
+    return data;
+  }
+  async getThriller() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "триллер" },
+    });
+    return data;
+  }
+  async getAdventures() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "приключения" },
+    });
+    return data;
+  }
+  async getForeign() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "" },
+    });
+    return data;
+  }
+  async getMelodramas() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "мелодрама" },
+    });
+    return data;
+  }
+  async getFantastic() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "фантастика" },
+    });
+    return data;
+  }
+  async getFantasy() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "фэнтези" },
+    });
+    return data;
+  }
+  async getFamily() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "семейный" },
+    });
+    return data;
+  }
+  async getDetective() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "детектив" },
+    });
+    return data;
+  }
+  async getHorror() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "ужасы" },
+    });
+    return data;
+  }
+  async getMilitary() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "военный" },
+    });
+    return data;
+  }
+  async getCrime() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "криминал" },
+    });
+    return data;
+  }
+  async getWestern() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "вестерн" },
+    });
+    return data;
+  }
+  async getBiography() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "биография" },
+    });
+    return data;
+  }
+  async getSport() {
+    const data = await this.movieRepository.findAll({
+      where: { genre: "спорт" },
+    });
+    return data;
   }
 }

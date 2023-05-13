@@ -15,4 +15,9 @@ export class PersonService {
     }
     return persons;
   }
+
+  async getAll() {
+    const persons = await this.personRepository.findAll();
+    return persons;
+  }
 }
