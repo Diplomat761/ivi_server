@@ -9,11 +9,6 @@ import { Person } from "src/person/person.model";
 export class MoviesService {
   constructor(@InjectModel(Movie) private movieRepository: typeof Movie) {}
 
-  async getAllMovies() {
-    const movies = await this.movieRepository.findAll();
-    return movies;
-  }
-
   async getMovieByActor(id: number) {
     const movies = await this.movieRepository.findAll({
       include: [
@@ -61,6 +56,46 @@ export class MoviesService {
       moviePersons.push(moviePerson);
     }
     return moviePersons;
+  }
+
+  // ДИНАМИЧЕСКИЙ ПОИСК --------------------------
+
+  async searchMovies(
+    genre: string,
+    country: string,
+    years: string,
+    rating: number
+  ): Promise<Movie[]> {
+    try {
+      const where = {};
+
+      if (genre) {
+        where["genre"] = { [Op.eq]: genre };
+      }
+
+      if (country) {
+        where["country"] = { [Op.eq]: country };
+      }
+
+      if (years) {
+        where["years"] = { [Op.eq]: years };
+      }
+
+      if (rating) {
+        where["rating"] = { [Op.gte]: rating };
+      }
+
+      return this.movieRepository.findAll({
+        where,
+        include: [
+          { model: Person, as: "actors", through: { attributes: [] } },
+          { model: Person, as: "director" },
+        ],
+      });
+    } catch (error) {
+      console.error("Ошибка при поиске фильмов:", error);
+      throw error;
+    }
   }
   // БАНЕР ---------------------------------------
   async getPromoMovie() {

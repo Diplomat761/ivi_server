@@ -1,14 +1,16 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { MoviesService } from "./movies.service";
+
+interface IFilter {
+  genre: string;
+  country: string;
+  years: string;
+  rating: number;
+}
 
 @Controller("movies")
 export class MoviesController {
   constructor(private movieService: MoviesService) {}
-
-  @Get()
-  getAll() {
-    return this.movieService.getAllMovies();
-  }
 
   @Get("/actor/:id")
   getMovieByActor(@Param("id") id: number) {
@@ -33,6 +35,12 @@ export class MoviesController {
   @Post("/movpers")
   createMoviePerson(@Body() moviePersonDataList: any[]) {
     return this.movieService.createMoviePerson(moviePersonDataList);
+  }
+
+  // ДИНАМИЧЕСКИЙ ПОИСК --------------------------
+  @Get()
+  async searchMovies(@Query() { genre, country, years, rating }: IFilter) {
+    return this.movieService.searchMovies(genre, country, years, rating);
   }
   // БАНЕР ---------------------------------------
   @Get("/promo")
