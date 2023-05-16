@@ -90,10 +90,25 @@ export class MoviesService {
       return this.movieRepository.findAll({
         where,
         include: [
-          { model: Person, as: "actors", through: { attributes: [] } },
-          { model: Person, as: "director" },
-          { model: Genre, as: "genre" },
-          { model: Country, as: "country" },
+          {
+            model: Person,
+            as: "actors",
+            through: { attributes: [] },
+            attributes: ["id", "name"],
+          },
+          { model: Person, as: "director", attributes: ["id", "name"] },
+          { model: Genre, as: "genre", attributes: ["id", "value"] },
+          { model: Country, as: "country", attributes: ["id", "value"] },
+        ],
+        attributes: [
+          "id",
+          "avatars",
+          "name",
+          "original_name",
+          "rating",
+          "years",
+          "durations",
+          "text",
         ],
         limit: 15,
       });
@@ -128,10 +143,12 @@ export class MoviesService {
         {
           model: Country,
           as: "country",
+          attributes: ["id", "value"],
         },
         {
           model: Genre,
           as: "genre",
+          attributes: ["id", "value"],
         },
       ],
       limit: 10,
@@ -156,10 +173,12 @@ export class MoviesService {
         {
           model: Country,
           as: "country",
+          attributes: ["id", "value"],
         },
         {
           model: Genre,
           as: "genre",
+          attributes: ["id", "value"],
         },
       ],
     });
