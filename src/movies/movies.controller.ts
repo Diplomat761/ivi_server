@@ -2,8 +2,8 @@ import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { MoviesService } from "./movies.service";
 
 interface IFilter {
-  genre: string;
-  country: string;
+  genre: number;
+  country: number;
   years: string;
   rating: number;
 }

@@ -4,6 +4,8 @@ import { Movie } from "./movies.model";
 import { Op } from "sequelize";
 import { MoviePerson } from "src/person/movie-person.model";
 import { Person } from "src/person/person.model";
+import { Genre } from "src/genre/genre.model";
+import { Country } from "src/country/country.model";
 
 @Injectable()
 export class MoviesService {
@@ -61,8 +63,8 @@ export class MoviesService {
   // ДИНАМИЧЕСКИЙ ПОИСК --------------------------
 
   async searchMovies(
-    genre: string,
-    country: string,
+    genre: number,
+    country: number,
     years: string,
     rating: number
   ): Promise<Movie[]> {
@@ -70,11 +72,11 @@ export class MoviesService {
       const where = {};
 
       if (genre) {
-        where["genre"] = { [Op.eq]: genre };
+        where["genre_id"] = { [Op.eq]: genre };
       }
 
       if (country) {
-        where["country"] = { [Op.eq]: country };
+        where["country_id"] = { [Op.eq]: country };
       }
 
       if (years) {
@@ -90,6 +92,8 @@ export class MoviesService {
         include: [
           { model: Person, as: "actors", through: { attributes: [] } },
           { model: Person, as: "director" },
+          { model: Genre, as: "genre" },
+          { model: Country, as: "country" },
         ],
         limit: 15,
       });
