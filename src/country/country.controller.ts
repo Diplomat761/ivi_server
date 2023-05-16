@@ -6,7 +6,7 @@ import { CountryService } from "./country.service";
 export class CountryController {
   constructor(private countryService: CountryService) {}
   @Post()
-  createMovie(@Body() countryDataList: any[]) {
+  createCountry(@Body() countryDataList: any[]) {
     return this.countryService.createCountry(countryDataList);
   }
 }

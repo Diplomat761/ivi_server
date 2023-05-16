@@ -5,7 +5,7 @@ import { GenreService } from "./genre.service";
 export class GenreController {
   constructor(private genreService: GenreService) {}
   @Post()
-  createMovie(@Body() genreDataList: any[]) {
+  createGenre(@Body() genreDataList: any[]) {
     return this.genreService.createGenre(genreDataList);
   }
 }
