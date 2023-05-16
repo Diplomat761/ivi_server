@@ -25,6 +25,10 @@ import { MoviesModule } from "./movies/movies.module";
 import { PersonModule } from "./person/person.module";
 import { Person } from "./person/person.model";
 import { MoviePerson } from "./person/movie-person.model";
+import { GenreModule } from "./genre/genre.module";
+import { CountryModule } from "./country/country.module";
+import { Country } from "./country/country.model";
+import { Genre } from "./genre/genre.model";
 
 @Module({
   controllers: [],
@@ -56,6 +60,8 @@ import { MoviePerson } from "./person/movie-person.model";
         Movie,
         Person,
         MoviePerson,
+        Country,
+        Genre,
       ],
       autoLoadModels: true,
     }),
@@ -69,6 +75,8 @@ import { MoviePerson } from "./person/movie-person.model";
     ImagesModule,
     MoviesModule,
     PersonModule,
+    GenreModule,
+    CountryModule,
   ],
 })
 export class AppModule {}

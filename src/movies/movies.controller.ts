@@ -48,10 +48,10 @@ export class MoviesController {
     return this.movieService.getPromoMovie();
   }
   // ЛУЧШЕЕ --------------------------------------
-  @Get("/collection/rec")
-  getRec() {
-    return this.movieService.getRecMovie();
-  }
+  // @Get("/collection/rec")
+  // getRec() {
+  //   return this.movieService.getRecMovie();
+  // }
 
   @Get("/collection/favorite")
   getFavorite() {

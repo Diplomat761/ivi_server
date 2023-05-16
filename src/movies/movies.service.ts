@@ -108,24 +108,24 @@ export class MoviesService {
     return movies;
   }
   // ЛУЧШЕЕ --------------------------------------
-  async getRecMovie() {
-    const movies = await this.movieRepository.findAll({
-      where: { country: "США", rating: { [Op.gt]: 8 } },
-      attributes: [
-        "id",
-        "avatars",
-        "name",
-        "original_name",
-        "rating",
-        "years",
-        "durations",
-        "country",
-        "genre",
-      ],
-      limit: 10,
-    });
-    return movies;
-  }
+  // async getRecMovie() {
+  //   const movies = await this.movieRepository.findAll({
+  //     where: { country: "США", rating: { [Op.gt]: 8 } },
+  //     attributes: [
+  //       "id",
+  //       "avatars",
+  //       "name",
+  //       "original_name",
+  //       "rating",
+  //       "years",
+  //       "durations",
+  //       "country",
+  //       "genre",
+  //     ],
+  //     limit: 10,
+  //   });
+  //   return movies;
+  // }
 
   async getFavoriteMovie() {
     const movies = await this.movieRepository.findAll({

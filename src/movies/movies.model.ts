@@ -7,6 +7,8 @@ import {
   Model,
   Table,
 } from "sequelize-typescript";
+import { Country } from "src/country/country.model";
+import { Genre } from "src/genre/genre.model";
 import { MoviePerson } from "src/person/movie-person.model";
 
 import { Person } from "src/person/person.model";
@@ -42,11 +44,19 @@ export class Movie extends Model<Movie> {
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   durations: string;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
-  country: string;
+  @ForeignKey(() => Country)
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: false })
+  country_id: number;
 
-  @Column({ type: DataType.STRING, unique: false, allowNull: false })
-  genre: string;
+  @BelongsTo(() => Country, "country_id")
+  country: Country;
+
+  @ForeignKey(() => Genre)
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: false })
+  genre_id: number;
+
+  @BelongsTo(() => Genre, "genre_id")
+  genre: Genre;
 
   @Column({ type: DataType.TEXT, unique: false, allowNull: false })
   text: string;
