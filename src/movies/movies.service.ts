@@ -123,8 +123,16 @@ export class MoviesService {
         "rating",
         "years",
         "durations",
-        "country_id",
-        "genre_id",
+      ],
+      include: [
+        {
+          model: Country,
+          as: "country",
+        },
+        {
+          model: Genre,
+          as: "genre",
+        },
       ],
       limit: 10,
     });
@@ -143,8 +151,16 @@ export class MoviesService {
         "rating",
         "years",
         "durations",
-        "country",
-        "genre",
+      ],
+      include: [
+        {
+          model: Country,
+          as: "country",
+        },
+        {
+          model: Genre,
+          as: "genre",
+        },
       ],
     });
     return movies;

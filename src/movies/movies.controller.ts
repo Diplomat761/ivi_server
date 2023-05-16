@@ -48,7 +48,7 @@ export class MoviesController {
     return this.movieService.getPromoMovie();
   }
   // ЛУЧШЕЕ --------------------------------------
-  @Get("/collection/rec")
+  @Get("/weeklyTop")
   getRec() {
     return this.movieService.getRecMovie();
   }
