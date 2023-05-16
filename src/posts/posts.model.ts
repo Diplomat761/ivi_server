@@ -11,6 +11,7 @@ import {
 import { Group } from "src/groups/groups.model";
 import { PostGroups } from "src/groups/post-groups.model";
 import { Image } from "src/images/images.model";
+import { Movie } from "src/movies/movies.model";
 import { User } from "src/users/users.model";
 
 interface PostCreationAttrs {
@@ -19,6 +20,7 @@ interface PostCreationAttrs {
   content: string;
   userId: number;
   imageId: number;
+  movieId: number;
 }
 @Table({ tableName: "posts" })
 export class Posts extends Model<Posts, PostCreationAttrs> {
@@ -54,17 +56,24 @@ export class Posts extends Model<Posts, PostCreationAttrs> {
   @Column({ type: DataType.INTEGER })
   userId: number;
 
+  @BelongsTo(() => User)
+  author: User;
+
+  @ForeignKey(() => Movie)
+  @Column({ type: DataType.INTEGER })
+  movieId: number;
+
+  @BelongsTo(() => Movie)
+  movies: Movie;
+
   @ApiProperty({ example: "2", description: "Картинка поста" })
   @ForeignKey(() => Image)
   @Column({ type: DataType.INTEGER })
   imageId: number;
 
-  @BelongsTo(() => User)
-  author: User;
+  @BelongsTo(() => Image)
+  image: Image;
 
   @BelongsToMany(() => Group, () => PostGroups)
   groups: Group[];
-
-  @BelongsTo(() => Image)
-  image: Image;
 }

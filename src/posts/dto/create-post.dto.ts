@@ -24,4 +24,5 @@ export class CreatePostDto {
 
   @ApiProperty({ example: "2", description: "Группа поста" })
   readonly groupId: number;
+  readonly movieId: number;
 }

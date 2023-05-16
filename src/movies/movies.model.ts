@@ -4,6 +4,7 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from "sequelize-typescript";
@@ -12,6 +13,7 @@ import { Genre } from "src/genre/genre.model";
 import { MoviePerson } from "src/person/movie-person.model";
 
 import { Person } from "src/person/person.model";
+import { Posts } from "src/posts/posts.model";
 
 @Table({ tableName: "movies" })
 export class Movie extends Model<Movie> {
@@ -73,4 +75,8 @@ export class Movie extends Model<Movie> {
 
   @BelongsTo(() => Person, "director_id")
   director: Person;
+
+  @HasMany(() => Posts)
+  posts: Posts[];
 }
+//
