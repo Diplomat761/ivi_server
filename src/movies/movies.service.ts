@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Movie } from "./movies.model";
-import { Op } from "sequelize";
+import { FindOptions, Op, Sequelize } from "sequelize";
 import { MoviePerson } from "src/person/movie-person.model";
 import { Person } from "src/person/person.model";
 import { Genre } from "src/genre/genre.model";
@@ -66,7 +66,8 @@ export class MoviesService {
     genre: number,
     country: number,
     years: string,
-    rating: number
+    rating: number,
+    sort: string
   ): Promise<Movie[]> {
     try {
       const where = {};
@@ -87,7 +88,7 @@ export class MoviesService {
         where["rating"] = { [Op.gte]: rating };
       }
 
-      return this.movieRepository.findAll({
+      const options: FindOptions = {
         where,
         include: [
           {
@@ -110,13 +111,33 @@ export class MoviesService {
           "durations",
           "text",
         ],
-        limit: 15,
-      });
+      };
+
+      switch (sort) {
+        case "alphabetical":
+          options.order = [["original_name", "ASC"]];
+          break;
+        case "rating-asc":
+          options.order = [["rating", "ASC"]];
+          break;
+        case "rating-desc":
+          options.order = [["rating", "DESC"]];
+          break;
+        case "year-asc":
+          options.order = [["years", "ASC"]];
+          break;
+        case "year-desc":
+          options.order = [["years", "DESC"]];
+          break;
+      }
+
+      return this.movieRepository.findAll(options);
     } catch (error) {
       console.error("Ошибка при поиске фильмов:", error);
       throw error;
     }
   }
+
   // БАНЕР ---------------------------------------
   async getPromoMovie() {
     const movies = await this.movieRepository.findAll({

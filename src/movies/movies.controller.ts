@@ -6,7 +6,8 @@ interface IFilter {
   country: number;
   years: string;
   rating: number;
-}
+  sort: string;
+} //
 
 @Controller("movies")
 export class MoviesController {
@@ -39,8 +40,10 @@ export class MoviesController {
 
   // ДИНАМИЧЕСКИЙ ПОИСК --------------------------
   @Get()
-  async searchMovies(@Query() { genre, country, years, rating }: IFilter) {
-    return this.movieService.searchMovies(genre, country, years, rating);
+  async searchMovies(
+    @Query() { genre, country, years, rating, sort }: IFilter
+  ) {
+    return this.movieService.searchMovies(genre, country, years, rating, sort);
   }
   // БАНЕР ---------------------------------------
   @Get("/promo")
