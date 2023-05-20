@@ -6,6 +6,7 @@ import { MoviePerson } from "src/person/movie-person.model";
 import { Person } from "src/person/person.model";
 import { Genre } from "src/genre/genre.model";
 import { Country } from "src/country/country.model";
+import { Posts } from "src/posts/posts.model";
 
 @Injectable()
 export class MoviesService {
@@ -18,6 +19,7 @@ export class MoviesService {
           model: Person,
           as: "actors",
           where: { id: id },
+          attributes: [],
           through: { attributes: [] },
         },
       ],
@@ -35,7 +37,32 @@ export class MoviesService {
   async getMoviesById(id: number) {
     const movie = await this.movieRepository.findOne({
       where: { id },
-      include: { all: true },
+      include: [
+        {
+          model: Person,
+          as: "actors",
+          through: { attributes: [] },
+          attributes: ["id", "name"],
+        },
+        { model: Person, as: "director", attributes: ["id", "name"] },
+        { model: Genre, as: "genre", attributes: ["id", "value"] },
+        { model: Country, as: "country", attributes: ["id", "value"] },
+        {
+          model: Posts,
+          as: "posts",
+          attributes: ["id", "content", "userId"],
+        },
+      ],
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "text",
+      ],
     });
     return movie;
   }
