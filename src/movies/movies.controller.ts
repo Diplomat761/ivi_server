@@ -43,8 +43,18 @@ export class MoviesController {
   async searchMovies(
     @Query() { genre, country, years, rating, sort }: IFilter
   ) {
-    return this.movieService.searchMovies(genre, country, years, rating, sort);
+    const genreIds = genre ? genre.toString().split(",").map(Number) : [];
+    const countryIds = country ? country.toString().split(",").map(Number) : [];
+
+    return this.movieService.searchMovies(
+      genreIds,
+      countryIds,
+      years,
+      rating,
+      sort
+    );
   }
+
   // БАНЕР ---------------------------------------
   @Get("/promo")
   getСarousel() {

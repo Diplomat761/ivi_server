@@ -91,82 +91,75 @@ export class MoviesService {
   // ДИНАМИЧЕСКИЙ ПОИСК --------------------------
 
   async searchMovies(
-    genre: number,
-    country: number,
+    genres: number[],
+    countries: number[],
     years: string,
     rating: number,
     sort: string
   ): Promise<Movie[]> {
-    try {
-      const where = {};
+    const where: any = {};
 
-      if (genre) {
-        where["genre_id"] = { [Op.eq]: genre };
-      }
-
-      if (country) {
-        where["country_id"] = { [Op.eq]: country };
-      }
-
-      if (years) {
-        where["years"] = { [Op.eq]: years };
-      }
-
-      if (rating) {
-        where["rating"] = { [Op.gte]: rating };
-      }
-
-      const options: FindOptions = {
-        where,
-        include: [
-          {
-            model: Person,
-            as: "actors",
-            through: { attributes: [] },
-            attributes: ["id", "name"],
-          },
-          { model: Person, as: "director", attributes: ["id", "name"] },
-          { model: Genre, as: "genre", attributes: ["id", "value"] },
-          { model: Country, as: "country", attributes: ["id", "value"] },
-        ],
-        attributes: [
-          "id",
-          "avatars",
-          "name",
-          "original_name",
-          "rating",
-          "years",
-          "durations",
-          "text",
-          "ageLimit",
-        ],
-      };
-
-      switch (sort) {
-        case "alphabetical":
-          options.order = [["original_name", "ASC"]];
-          break;
-        case "rating-asc":
-          options.order = [["rating", "ASC"]];
-          break;
-        case "rating-desc":
-          options.order = [["rating", "DESC"]];
-          break;
-        case "year-asc":
-          options.order = [["years", "ASC"]];
-          break;
-        case "year-desc":
-          options.order = [["years", "DESC"]];
-          break;
-      }
-
-      return this.movieRepository.findAll(options);
-    } catch (error) {
-      console.error("Ошибка при поиске фильмов:", error);
-      throw error;
+    if (genres.length > 0) {
+      where.genre_id = { [Op.in]: genres };
     }
-  }
 
+    if (countries.length > 0) {
+      where.country_id = { [Op.in]: countries };
+    }
+    if (years) {
+      where.years = years;
+    }
+
+    if (rating) {
+      where.rating = { [Op.gte]: rating };
+    }
+
+    const options: FindOptions = {
+      where,
+      include: [
+        {
+          model: Person,
+          as: "actors",
+          through: { attributes: [] },
+          attributes: ["id", "name"],
+        },
+        { model: Person, as: "director", attributes: ["id", "name"] },
+        { model: Genre, as: "genre", attributes: ["id", "value"] },
+        { model: Country, as: "country", attributes: ["id", "value"] },
+      ],
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+        "text",
+        "ageLimit",
+      ],
+    };
+
+    switch (sort) {
+      case "alphabetical":
+        options.order = [["original_name", "ASC"]];
+        break;
+      case "rating-asc":
+        options.order = [["rating", "ASC"]];
+        break;
+      case "rating-desc":
+        options.order = [["rating", "DESC"]];
+        break;
+      case "year-asc":
+        options.order = [["years", "ASC"]];
+        break;
+      case "year-desc":
+        options.order = [["years", "DESC"]];
+        break;
+    }
+
+    return this.movieRepository.findAll(options);
+  }
   // БАНЕР ---------------------------------------
   async getPromoMovie() {
     const movies = await this.movieRepository.findAll({
