@@ -40,6 +40,9 @@ export class Movie extends Model<Movie> {
   @Column({ type: DataType.FLOAT, unique: false, allowNull: false })
   rating: number;
 
+  @Column({ type: DataType.FLOAT, unique: false, allowNull: false })
+  ageLimit: number;
+
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   years: string;
 

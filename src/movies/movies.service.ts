@@ -19,8 +19,8 @@ export class MoviesService {
           model: Person,
           as: "actors",
           where: { id: id },
-          attributes: [],
           through: { attributes: [] },
+          attributes: ["id", "name"],
         },
       ],
     });
@@ -62,6 +62,7 @@ export class MoviesService {
         "years",
         "durations",
         "text",
+        "ageLimit",
       ],
     });
     return movie;
@@ -137,6 +138,7 @@ export class MoviesService {
           "years",
           "durations",
           "text",
+          "ageLimit",
         ],
       };
 
