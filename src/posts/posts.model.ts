@@ -37,11 +37,11 @@ export class Posts extends Model<Posts, PostCreationAttrs> {
     example: "main-hero-text",
     description: "Уникальное название для поиска",
   })
-  @Column({ type: DataType.STRING, unique: true, allowNull: false })
+  @Column({ type: DataType.STRING, unique: true, allowNull: true })
   uniqueName: string;
 
   @ApiProperty({ example: "Привет мир!", description: "Заголовок" })
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: true })
   title: string;
 
   @ApiProperty({
@@ -68,7 +68,7 @@ export class Posts extends Model<Posts, PostCreationAttrs> {
 
   @ApiProperty({ example: "2", description: "Картинка поста" })
   @ForeignKey(() => Image)
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, allowNull: true })
   imageId: number;
 
   @BelongsTo(() => Image)

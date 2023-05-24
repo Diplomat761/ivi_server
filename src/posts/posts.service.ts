@@ -24,7 +24,7 @@ export class PostsService {
       groupId: dto.groupId,
     };
     await this.groupService.createPostGroup(addGroup);
-    await this.imageService.updateImage(dto.imageId, addImage);
+    // await this.imageService.updateImage(dto.imageId, addImage);
     return post;
   }
   // Получаем все посты

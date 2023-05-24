@@ -10,7 +10,7 @@ interface IFilter {
   minRatingCount: number;
   maxRatingCount: number;
   page: number;
-} //
+}
 
 @Controller("movies")
 export class MoviesController {
