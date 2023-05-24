@@ -224,7 +224,14 @@ export class MoviesService {
     const movies = await this.movieRepository.findAll({
       where: { years: "2023" },
       limit: 5,
-      attributes: ["id", "name", "original_name", "description", "promo"],
+      attributes: [
+        "id",
+        "name",
+        "original_name",
+        "description",
+        "description_EN",
+        "promo",
+      ],
     });
     return movies;
   }
