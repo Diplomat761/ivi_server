@@ -129,6 +129,8 @@ export class MoviesService {
     years: string,
     rating: number,
     sort: string,
+    minRatingCount: number,
+    maxRatingCount: number,
     page: number
   ): Promise<Movie[]> {
     const where: any = {};
@@ -147,8 +149,16 @@ export class MoviesService {
     if (rating) {
       where.rating = { [Op.gte]: rating };
     }
+    if (minRatingCount && maxRatingCount) {
+      where.count_rating = { [Op.between]: [minRatingCount, maxRatingCount] };
+    } else if (minRatingCount) {
+      where.count_rating = { [Op.gte]: minRatingCount };
+    } else if (maxRatingCount) {
+      where.count_rating = { [Op.lte]: maxRatingCount };
+    }
     const limit = 35; // Количество фильмов на странице
     const offset = (page - 1) * limit; // Смещение
+
     const options: FindOptions = {
       limit,
       offset,
