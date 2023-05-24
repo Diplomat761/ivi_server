@@ -20,7 +20,7 @@ export class MoviesService {
           as: "actors",
           where: { id: id },
           through: { attributes: [] },
-          attributes: ["id", "name"],
+          attributes: ["id", "avatar", "full_name", "description"],
         },
       ],
     });
@@ -30,6 +30,13 @@ export class MoviesService {
   async getMovieByDirector(id: number) {
     const movies = await this.movieRepository.findAll({
       where: { director_id: id },
+      include: [
+        {
+          model: Person,
+          as: "director",
+          where: { id: id },
+        },
+      ],
     });
     return movies;
   }
@@ -42,11 +49,35 @@ export class MoviesService {
           model: Person,
           as: "actors",
           through: { attributes: [] },
-          attributes: ["id", "name"],
+          attributes: [
+            "id",
+            "avatar",
+            "full_name",
+            "full_name_EN",
+            "description",
+            "description_EN",
+            "DOB",
+          ],
         },
-        { model: Person, as: "director", attributes: ["id", "name"] },
-        { model: Genre, as: "genre", attributes: ["id", "value"] },
-        { model: Country, as: "country", attributes: ["id", "value"] },
+        {
+          model: Person,
+          as: "director",
+          attributes: [
+            "id",
+            "avatar",
+            "full_name",
+            "full_name_EN",
+            "description",
+            "description_EN",
+            "DOB",
+          ],
+        },
+        { model: Genre, as: "genre", attributes: ["id", "value", "value_EN"] },
+        {
+          model: Country,
+          as: "country",
+          attributes: ["id", "value", "value_EN"],
+        },
         {
           model: Posts,
           as: "posts",
@@ -61,8 +92,10 @@ export class MoviesService {
         "rating",
         "years",
         "durations",
-        "text",
+        "description",
+        "description_EN",
         "ageLimit",
+        "count_rating",
       ],
     });
     return movie;
@@ -121,11 +154,35 @@ export class MoviesService {
           model: Person,
           as: "actors",
           through: { attributes: [] },
-          attributes: ["id", "name"],
+          attributes: [
+            "id",
+            "avatar",
+            "full_name",
+            "full_name_EN",
+            "description",
+            "description_EN",
+            "DOB",
+          ],
         },
-        { model: Person, as: "director", attributes: ["id", "name"] },
-        { model: Genre, as: "genre", attributes: ["id", "value"] },
-        { model: Country, as: "country", attributes: ["id", "value"] },
+        {
+          model: Person,
+          as: "director",
+          attributes: [
+            "id",
+            "avatar",
+            "full_name",
+            "full_name_EN",
+            "description",
+            "description_EN",
+            "DOB",
+          ],
+        },
+        { model: Genre, as: "genre", attributes: ["id", "value", "value_EN"] },
+        {
+          model: Country,
+          as: "country",
+          attributes: ["id", "value", "value_EN"],
+        },
       ],
       attributes: [
         "id",
@@ -135,8 +192,10 @@ export class MoviesService {
         "rating",
         "years",
         "durations",
-        "text",
+        "description",
+        "description_EN",
         "ageLimit",
+        "count_rating",
       ],
     };
 
@@ -165,7 +224,7 @@ export class MoviesService {
     const movies = await this.movieRepository.findAll({
       where: { years: "2023" },
       limit: 5,
-      attributes: ["id", "name", "original_name", "text", "promo"],
+      attributes: ["id", "name", "original_name", "description", "promo"],
     });
     return movies;
   }
@@ -186,12 +245,12 @@ export class MoviesService {
         {
           model: Country,
           as: "country",
-          attributes: ["id", "value"],
+          attributes: ["id", "value", "value_EN"],
         },
         {
           model: Genre,
           as: "genre",
-          attributes: ["id", "value"],
+          attributes: ["id", "value", "value_EN"],
         },
       ],
       limit: 10,
@@ -216,12 +275,12 @@ export class MoviesService {
         {
           model: Country,
           as: "country",
-          attributes: ["id", "value"],
+          attributes: ["id", "value", "value_EN"],
         },
         {
           model: Genre,
           as: "genre",
-          attributes: ["id", "value"],
+          attributes: ["id", "value", "value_EN"],
         },
       ],
     });

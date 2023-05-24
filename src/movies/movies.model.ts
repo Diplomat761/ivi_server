@@ -40,6 +40,9 @@ export class Movie extends Model<Movie> {
   @Column({ type: DataType.FLOAT, unique: false, allowNull: false })
   rating: number;
 
+  @Column({ type: DataType.INTEGER, unique: false, allowNull: false })
+  count_rating: number;
+
   @Column({ type: DataType.FLOAT, unique: false, allowNull: false })
   ageLimit: number;
 
@@ -64,7 +67,10 @@ export class Movie extends Model<Movie> {
   genre: Genre;
 
   @Column({ type: DataType.TEXT, unique: false, allowNull: false })
-  text: string;
+  description: string;
+
+  @Column({ type: DataType.TEXT, unique: false, allowNull: true })
+  description_EN: string;
 
   @BelongsToMany(() => Person, () => MoviePerson, "movie_id", "person_id")
   actors: Person[];

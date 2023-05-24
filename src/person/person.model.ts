@@ -18,11 +18,32 @@ export class Person extends Model<Person> {
   })
   id: number;
 
+  @Column({ type: DataType.STRING, unique: false, allowNull: false })
+  avatar: string;
+
   @Column({
     type: DataType.STRING(255),
     allowNull: false,
   })
-  name: string;
+  full_name: string;
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: true,
+  })
+  full_name_EN: string;
+
+  @Column({ type: DataType.TEXT, unique: false, allowNull: false })
+  description: string;
+
+  @Column({ type: DataType.TEXT, unique: false, allowNull: true })
+  description_EN: string;
+
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  DOB: string;
 
   @BelongsToMany(() => Movie, () => MoviePerson)
   movies: Movie[];

@@ -24,6 +24,12 @@ export class Genre extends Model<Genre> {
   })
   value: string;
 
+  @Column({
+    type: DataType.STRING(255),
+    allowNull: false,
+  })
+  value_EN: string;
+
   @HasMany(() => Movie)
   movies: Movie[];
 }
