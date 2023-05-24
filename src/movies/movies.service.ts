@@ -7,6 +7,8 @@ import { Person } from "src/person/person.model";
 import { Genre } from "src/genre/genre.model";
 import { Country } from "src/country/country.model";
 import { Posts } from "src/posts/posts.model";
+import { User } from "src/users/users.model";
+import { Profile } from "src/profiles/profiles.model";
 
 @Injectable()
 export class MoviesService {
@@ -82,6 +84,20 @@ export class MoviesService {
           model: Posts,
           as: "posts",
           attributes: ["id", "content", "userId"],
+          include: [
+            {
+              model: User,
+              as: "author",
+              attributes: ["id", "email"],
+              include: [
+                {
+                  model: Profile,
+                  as: "profile",
+                  attributes: ["id", "firstName", "lastName"],
+                },
+              ],
+            },
+          ],
         },
       ],
       attributes: [
