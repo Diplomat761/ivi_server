@@ -7,6 +7,7 @@ interface IFilter {
   years: string;
   rating: number;
   sort: string;
+  page: number;
 } //
 
 @Controller("movies")
@@ -41,7 +42,7 @@ export class MoviesController {
   // ДИНАМИЧЕСКИЙ ПОИСК --------------------------
   @Get()
   async searchMovies(
-    @Query() { genre, country, years, rating, sort }: IFilter
+    @Query() { genre, country, years, rating, sort, page }: IFilter
   ) {
     const genreIds = genre ? genre.toString().split(",").map(Number) : [];
     const countryIds = country ? country.toString().split(",").map(Number) : [];
@@ -51,7 +52,8 @@ export class MoviesController {
       countryIds,
       years,
       rating,
-      sort
+      sort,
+      page
     );
   }
 

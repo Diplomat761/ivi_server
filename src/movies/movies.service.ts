@@ -128,7 +128,8 @@ export class MoviesService {
     countries: number[],
     years: string,
     rating: number,
-    sort: string
+    sort: string,
+    page: number
   ): Promise<Movie[]> {
     const where: any = {};
 
@@ -146,8 +147,11 @@ export class MoviesService {
     if (rating) {
       where.rating = { [Op.gte]: rating };
     }
-
+    const limit = 35; // Количество фильмов на странице
+    const offset = (page - 1) * limit; // Смещение
     const options: FindOptions = {
+      limit,
+      offset,
       where,
       include: [
         {
