@@ -29,6 +29,8 @@ import { GenreModule } from "./genre/genre.module";
 import { CountryModule } from "./country/country.module";
 import { Country } from "./country/country.model";
 import { Genre } from "./genre/genre.model";
+import { CommentModule } from "./comment/comment.module";
+import { Comment } from "./comment/comment.model";
 
 @Module({
   controllers: [],
@@ -62,6 +64,7 @@ import { Genre } from "./genre/genre.model";
         MoviePerson,
         Country,
         Genre,
+        Comment,
       ],
       autoLoadModels: true,
     }),
@@ -77,6 +80,7 @@ import { Genre } from "./genre/genre.model";
     PersonModule,
     GenreModule,
     CountryModule,
+    CommentModule,
   ],
 })
 export class AppModule {}

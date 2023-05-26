@@ -12,12 +12,20 @@ import { Image } from "src/images/images.model";
 import { AuthModule } from "src/auth/auth.module";
 import { ImagesModule } from "src/images/images.module";
 import { ImagesService } from "src/images/images.service";
+import { Comment } from "src/comment/comment.model";
 
 @Module({
   providers: [PostsService, ImagesService],
   controllers: [PostsController],
   imports: [
-    SequelizeModule.forFeature([User, Posts, Group, PostGroups, Image]),
+    SequelizeModule.forFeature([
+      User,
+      Posts,
+      Group,
+      PostGroups,
+      Image,
+      Comment,
+    ]),
     FilesModule,
     GroupsModule,
     ImagesModule,

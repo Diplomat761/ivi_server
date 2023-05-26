@@ -10,6 +10,7 @@ import {
   Model,
   Table,
 } from "sequelize-typescript";
+import { Comment } from "src/comment/comment.model";
 import { Posts } from "src/posts/posts.model";
 import { Profile } from "src/profiles/profiles.model";
 import { Role } from "src/roles/roles.model";
@@ -51,6 +52,9 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @HasMany(() => Posts)
   posts: Posts[];
+
+  @HasMany(() => Comment)
+  coments: Comment[];
 
   @HasOne(() => Profile)
   profile: Profile[];

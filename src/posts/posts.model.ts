@@ -5,6 +5,7 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from "sequelize-typescript";
@@ -13,6 +14,7 @@ import { PostGroups } from "src/groups/post-groups.model";
 import { Image } from "src/images/images.model";
 import { Movie } from "src/movies/movies.model";
 import { User } from "src/users/users.model";
+import { Comment } from "src/comment/comment.model";
 
 interface PostCreationAttrs {
   uniqueName: string;
@@ -76,4 +78,7 @@ export class Posts extends Model<Posts, PostCreationAttrs> {
 
   @BelongsToMany(() => Group, () => PostGroups)
   groups: Group[];
+
+  @HasMany(() => Comment)
+  comments: Comment[];
 }

@@ -9,6 +9,7 @@ import { Country } from "src/country/country.model";
 import { Posts } from "src/posts/posts.model";
 import { User } from "src/users/users.model";
 import { Profile } from "src/profiles/profiles.model";
+import { Comment } from "src/comment/comment.model";
 
 @Injectable()
 export class MoviesService {
@@ -96,6 +97,10 @@ export class MoviesService {
                   attributes: ["id", "firstName", "lastName"],
                 },
               ],
+            },
+            {
+              model: Comment,
+              as: "comments",
             },
           ],
         },

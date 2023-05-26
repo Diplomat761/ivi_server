@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
+import { Comment } from "src/comment/comment.model";
 import { MoviePerson } from "src/person/movie-person.model";
 import { Person } from "src/person/person.model";
 import { PersonModule } from "src/person/person.module";
@@ -12,7 +13,7 @@ import { MoviesService } from "./movies.service";
   controllers: [MoviesController],
   providers: [MoviesService],
   imports: [
-    SequelizeModule.forFeature([Movie, Person, MoviePerson]),
+    SequelizeModule.forFeature([Movie, Person, MoviePerson, Comment]),
     PersonModule,
   ],
 })
