@@ -32,11 +32,15 @@ export class createUserDto {
   readonly lastName: string;
 
   @IsInt()
-  @Min(1)
+  @Min(1, {
+    message: "Укажите Ваш возраст",
+  })
   readonly age: number;
 
   @IsNotEmpty()
   @IsString()
-  @Matches(/^[0-9]{11}$/)
+  @Matches(/^[0-9]{11}$/, {
+    message: "Невалидный номер телефона",
+  })
   readonly phoneNumber: string;
 }

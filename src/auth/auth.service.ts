@@ -69,20 +69,28 @@ export class AuthService {
   }
   // Проверка пользователя по email и паролю
   private async validateUser(userDto: loginUserDto) {
-    // Получение пользователя из базы данных по email
     const user = await this.userService.getUserByEmail(userDto.email);
-    // Проверка соответствия пароля пользователя в запросе и пароля в базе данных
+
+    if (!user) {
+      throw new HttpException(
+        "Некорректный email или пароль",
+        HttpStatus.UNAUTHORIZED
+      );
+    }
+
     const passwordEquals = await bcrypt.compare(
       userDto.password,
       user.password
     );
-    if (user && passwordEquals) {
-      return user;
+
+    if (!passwordEquals) {
+      throw new HttpException(
+        "Некорректный email или пароль",
+        HttpStatus.UNAUTHORIZED
+      );
     }
-    // Если пользователь не найден или пароль неверный, выбрасываем исключение
-    throw new UnauthorizedException({
-      message: "Некорректный email или пароль",
-    });
+
+    return user;
   }
 
   // Генерируем токен
