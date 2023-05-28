@@ -18,7 +18,11 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken: string, refreshToken: string, profile: Profile) {
+    if (!profile.emails[0].value || profile.emails[0].value.trim() === "") {
+      throw new Error("Invalid email");
+    }
     const user = await this.userService.getUserByEmail(profile.emails[0].value);
+
     if (user) {
       return this.authService.generateToken(user);
     } else {

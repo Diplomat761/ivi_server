@@ -35,10 +35,15 @@ export class UsersService {
   }
   // Получаем пользователя по адресу почты
   async getUserByEmail(email: string) {
+    if (!email || email.trim() === "") {
+      throw new Error("Email is required");
+    }
+
     const user = await this.userRepository.findOne({
       where: { email },
       include: { all: true },
     });
+
     return user;
   }
   // Даем роль

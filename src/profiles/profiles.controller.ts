@@ -9,8 +9,8 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { Roles } from "src/auth/roles-auth.decorator";
-import { RolesGuard } from "src/auth/roles.guard";
+import { Roles } from "src/auth/utils/roles-auth.decorator";
+import { RolesGuard } from "src/auth/utils/roles.guard";
 import { createProfileDto } from "./dto/create-profile.dto";
 import { ProfilesService } from "./profiles.service";
 
