@@ -30,10 +30,6 @@ export class AuthController {
   @Get("google/redirect")
   @UseGuards(GoogleAuthGuard)
   googleRedirect(@Req() request: Request) {
-    console.log(request.user);
-    // if (request.user) {
-    //   return this.authServise.generateToken(request.user);
-    // }
-    return { msg: "Вход выполнен успешно" };
+    return request.user;
   }
 }

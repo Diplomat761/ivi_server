@@ -8,8 +8,7 @@ import { AuthService } from "../auth.service";
 @Injectable()
 export class SessionSerializer extends PassportSerializer {
   constructor(
-    @Inject("USER_SERVICE") private readonly userService: UsersService,
-    @Inject("AUTH_SERVICE") private readonly authService: AuthService
+    @Inject("USER_SERVICE") private readonly userService: UsersService
   ) {
     super();
   }
