@@ -13,18 +13,15 @@ import { ProfilesService } from "src/profiles/profiles.service";
 import { loginUserDto } from "src/users/dto/login-user.dto";
 
 import { InjectModel } from "@nestjs/sequelize";
-import { GoogleUser } from "src/users/google-users.model";
+
 import { Repository } from "sequelize-typescript";
-import { GoogleUserDto } from "src/users/dto/google-user.dto";
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtServise: JwtService,
-    private profileService: ProfilesService,
-    @InjectModel(GoogleUser)
-    private readonly googleUserRepository: Repository<GoogleUser>
+    private profileService: ProfilesService
   ) {}
   // Входим в аккаунт
   async login(userDto: loginUserDto) {
@@ -61,7 +58,7 @@ export class AuthService {
     return this.generateToken(user);
   }
   // Генерируем токен
-  private async generateToken(user: User) {
+  async generateToken(user: User) {
     const payload = { email: user.email, id: user.id, roles: user.roles };
     return {
       token: this.jwtServise.sign(payload),
@@ -91,27 +88,5 @@ export class AuthService {
     }
 
     return user;
-  }
-
-  // Генерируем токен
-  private async generateGoogleToken(user: GoogleUser) {
-    const payload = {
-      email: user.email,
-      id: user.id,
-      displayName: user.displayName,
-    };
-    return {
-      token: this.jwtServise.sign(payload),
-    };
-  }
-
-  async validateGoogleUser(googleUserDto: GoogleUserDto) {
-    const user = await this.googleUserRepository.findOne({
-      where: { email: googleUserDto.email },
-    });
-
-    if (user) return user;
-    const newUser = await this.googleUserRepository.create(googleUserDto);
-    return newUser;
   }
 }

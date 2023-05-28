@@ -19,7 +19,6 @@ import { Group } from "./groups/groups.model";
 import { PostGroups } from "./groups/post-groups.model";
 import { ImagesModule } from "./images/images.module";
 import { Image } from "./images/images.model";
-import { GoogleUser } from "./users/google-users.model";
 import { Movie } from "./movies/movies.model";
 import { MoviesModule } from "./movies/movies.module";
 import { PersonModule } from "./person/person.module";
@@ -31,11 +30,13 @@ import { Country } from "./country/country.model";
 import { Genre } from "./genre/genre.model";
 import { CommentModule } from "./comment/comment.module";
 import { Comment } from "./comment/comment.model";
+import { PassportModule } from "@nestjs/passport";
 
 @Module({
   controllers: [],
   providers: [],
   imports: [
+    PassportModule.register({ session: true }),
     ConfigModule.forRoot({
       envFilePath: ".env",
     }),
@@ -58,7 +59,6 @@ import { Comment } from "./comment/comment.model";
         Group,
         PostGroups,
         Image,
-        GoogleUser,
         Movie,
         Person,
         MoviePerson,

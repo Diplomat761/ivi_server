@@ -1,11 +1,13 @@
 import { Inject } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Profile, Strategy } from "passport-google-oauth20";
+import { UsersService } from "src/users/users.service";
 import { AuthService } from "../auth.service";
 
 export class GoogleStrategy extends PassportStrategy(Strategy) {
   constructor(
-    @Inject("AUTH_SERVICE") private readonly authService: AuthService
+    @Inject("AUTH_SERVICE") private readonly authService: AuthService,
+    @Inject("USER_SERVICE") private readonly userService: UsersService
   ) {
     super({
       clientID:
@@ -17,12 +19,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(accessToken: string, refreshToken: string, profile: Profile) {
-    console.log(accessToken);
-    console.log(refreshToken);
+    const user = await this.userService.getUserByEmail(profile.emails[0].value);
 
-    const user = await this.authService.validateGoogleUser({
-      email: profile.emails[0].value,
-      displayName: profile.displayName,
-    });
+    return user || null;
   }
 }

@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { Request } from "express";
 import { ApiTags } from "@nestjs/swagger";
 import { loginUserDto } from "src/users/dto/login-user.dto";
 import { createUserDto } from "src/users/dto/create-user.dto";
@@ -28,7 +29,11 @@ export class AuthController {
 
   @Get("google/redirect")
   @UseGuards(GoogleAuthGuard)
-  googleRedirect() {
+  googleRedirect(@Req() request: Request) {
+    console.log(request.user);
+    // if (request.user) {
+    //   return this.authServise.generateToken(request.user);
+    // }
     return { msg: "redirect ok" };
   }
 }
