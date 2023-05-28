@@ -1,5 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
+import { Country } from "src/country/country.model";
+import { Genre } from "src/genre/genre.model";
 import { Movie } from "src/movies/movies.model";
 import { Person } from "./person.model";
 
@@ -25,6 +27,15 @@ export class PersonService {
   async getById(id: number) {
     const person = await this.personRepository.findOne({
       where: { id },
+      attributes: [
+        "id",
+        "avatar",
+        "full_name",
+        "full_name_EN",
+        "description",
+        "description_EN",
+        "DOB",
+      ],
       include: [
         {
           model: Movie,
@@ -38,10 +49,18 @@ export class PersonService {
             "rating",
             "years",
             "durations",
-            "description",
-            "description_EN",
-            "ageLimit",
-            "count_rating",
+          ],
+          include: [
+            {
+              model: Country,
+              as: "country",
+              attributes: ["id", "value", "value_EN"],
+            },
+            {
+              model: Genre,
+              as: "genre",
+              attributes: ["id", "value", "value_EN"],
+            },
           ],
         },
       ],
