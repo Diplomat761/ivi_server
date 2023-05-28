@@ -1,4 +1,4 @@
-import { Inject } from "@nestjs/common";
+import { HttpException, HttpStatus, Inject } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Profile, Strategy } from "passport-google-oauth20";
 import { UsersService } from "src/users/users.service";
@@ -20,7 +20,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
 
   async validate(accessToken: string, refreshToken: string, profile: Profile) {
     const user = await this.userService.getUserByEmail(profile.emails[0].value);
-
-    return this.authService.generateToken(user);
+    if (user) {
+      return this.authService.generateToken(user);
+    } else {
+      throw new HttpException("Пользователь не найден", HttpStatus.NOT_FOUND);
+    }
   }
 }

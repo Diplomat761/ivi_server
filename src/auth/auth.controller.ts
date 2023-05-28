@@ -34,6 +34,6 @@ export class AuthController {
     // if (request.user) {
     //   return this.authServise.generateToken(request.user);
     // }
-    return { msg: "redirect ok" };
+    return { msg: "Вход выполнен успешно" };
   }
 }
