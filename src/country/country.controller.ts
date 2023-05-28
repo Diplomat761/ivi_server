@@ -20,7 +20,7 @@ export class CountryController {
   constructor(private countryService: CountryService) {}
   @Roles("ADMIN")
   @UseGuards(RolesGuard)
-  @Post("/many")
+  @Post("/data")
   createManyCountry(@Body() countryDataList: any[]) {
     return this.countryService.createManyCountry(countryDataList);
   }

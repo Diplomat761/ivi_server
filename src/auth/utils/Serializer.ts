@@ -19,8 +19,6 @@ export class SessionSerializer extends PassportSerializer {
 
   async deserializeUser(payload: any, done: Function) {
     const user = await this.userService.getUserByEmail(payload.email);
-    console.log("Deserialize User");
-    console.log(user);
     return user ? done(null, user) : done(null, null);
   }
 }
