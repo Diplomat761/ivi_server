@@ -101,6 +101,21 @@ export class MoviesService {
             {
               model: Comment,
               as: "comments",
+              attributes: ["id", "content", "userId"],
+              include: [
+                {
+                  model: User,
+                  as: "author",
+                  attributes: ["id", "email"],
+                  include: [
+                    {
+                      model: Profile,
+                      as: "profile",
+                      attributes: ["id", "firstName", "lastName"],
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },
