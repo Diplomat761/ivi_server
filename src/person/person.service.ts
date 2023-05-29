@@ -68,7 +68,32 @@ export class PersonService {
         },
       ],
     });
-    return person;
+    const movies = await this.movieRepository.findAll({
+      where: { director_id: id },
+
+      attributes: [
+        "id",
+        "avatars",
+        "name",
+        "original_name",
+        "rating",
+        "years",
+        "durations",
+      ],
+      include: [
+        {
+          model: Country,
+          as: "country",
+          attributes: ["id", "value", "value_EN"],
+        },
+        {
+          model: Genre,
+          as: "genre",
+          attributes: ["id", "value", "value_EN"],
+        },
+      ],
+    });
+    return { person, movies };
   }
 
   async getByActor(id: number) {
