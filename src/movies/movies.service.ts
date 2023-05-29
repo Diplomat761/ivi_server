@@ -10,10 +10,14 @@ import { Posts } from "src/posts/posts.model";
 import { User } from "src/users/users.model";
 import { Profile } from "src/profiles/profiles.model";
 import { Comment } from "src/comment/comment.model";
+import { PersonService } from "src/person/person.service";
 
 @Injectable()
 export class MoviesService {
-  constructor(@InjectModel(Movie) private movieRepository: typeof Movie) {}
+  constructor(
+    @InjectModel(Movie) private movieRepository: typeof Movie,
+    private personService: PersonService
+  ) {}
 
   async getMovieByActor(id: number) {
     const movies = await this.movieRepository.findAll({
@@ -167,7 +171,8 @@ export class MoviesService {
     sort: string,
     minRatingCount: number,
     maxRatingCount: number,
-    page: number
+    page: number,
+    directorName: string
   ): Promise<Movie[]> {
     const where: any = {};
 
@@ -191,6 +196,14 @@ export class MoviesService {
       where.count_rating = { [Op.gte]: minRatingCount };
     } else if (maxRatingCount) {
       where.count_rating = { [Op.lte]: maxRatingCount };
+    }
+
+    if (directorName) {
+      const matchingPersons = await this.personService.getMatchingDirectors(
+        directorName
+      );
+      const personIds = matchingPersons.map((directorName) => directorName.id);
+      where.director_id = { [Op.in]: personIds };
     }
     const limit = 35; // Количество фильмов на странице
     const offset = (page - 1) * limit; // Смещение
@@ -269,6 +282,7 @@ export class MoviesService {
 
     return this.movieRepository.findAll(options);
   }
+
   // БАНЕР ---------------------------------------
   async getPromoMovie() {
     const movies = await this.movieRepository.findAll({

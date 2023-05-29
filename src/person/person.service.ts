@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
+import { Op } from "sequelize";
 import { Country } from "src/country/country.model";
 import { Genre } from "src/genre/genre.model";
 import { Movie } from "src/movies/movies.model";
@@ -123,5 +124,17 @@ export class PersonService {
       ],
     });
     return movies;
+  }
+
+  async getMatchingDirectors(query: string): Promise<Person[]> {
+    const matchingDirectors = await this.personRepository.findAll({
+      where: {
+        full_name: {
+          [Op.startsWith]: query, // Поиск по началу имени
+        },
+      },
+    });
+
+    return matchingDirectors;
   }
 }

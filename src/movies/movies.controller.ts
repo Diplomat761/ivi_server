@@ -10,6 +10,7 @@ interface IFilter {
   minRatingCount: number;
   maxRatingCount: number;
   page: number;
+  directorName: string;
 }
 
 @Controller("movies")
@@ -54,6 +55,7 @@ export class MoviesController {
       minRatingCount,
       maxRatingCount,
       page,
+      directorName,
     }: IFilter
   ) {
     const genreIds = genre ? genre.toString().split(",").map(Number) : [];
@@ -67,7 +69,8 @@ export class MoviesController {
       sort,
       minRatingCount,
       maxRatingCount,
-      page
+      page,
+      directorName
     );
   }
 
