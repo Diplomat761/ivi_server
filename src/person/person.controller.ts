@@ -16,7 +16,17 @@ export class PersonController {
   }
 
   @Get("/:id")
-  getPersonById(@Param("id") id: number) {
+  getMoviesByIdPerson(@Param("id") id: number) {
     return this.personService.getById(id);
+  }
+
+  @Get("/director/:id")
+  getByDirector(@Param("id") id: number) {
+    return this.personService.getByDirector(id);
+  }
+
+  @Get("/actor/:id")
+  getByActor(@Param("id") id: number) {
+    return this.personService.getByActor(id);
   }
 }

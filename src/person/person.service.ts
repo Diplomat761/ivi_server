@@ -7,7 +7,10 @@ import { Person } from "./person.model";
 
 @Injectable()
 export class PersonService {
-  constructor(@InjectModel(Person) private personRepository: typeof Person) {}
+  constructor(
+    @InjectModel(Person) private personRepository: typeof Person,
+    @InjectModel(Movie) private movieRepository: typeof Movie
+  ) {}
 
   async createPerson(personDataList: any[]): Promise<Person[]> {
     const persons = [];
@@ -66,5 +69,34 @@ export class PersonService {
       ],
     });
     return person;
+  }
+
+  async getByActor(id: number) {
+    const movies = await this.movieRepository.findAll({
+      include: [
+        {
+          model: Person,
+          as: "actors",
+          where: { id: id },
+          through: { attributes: [] },
+          attributes: ["id", "avatar", "full_name", "description"],
+        },
+      ],
+    });
+    return movies;
+  }
+
+  async getByDirector(id: number) {
+    const movies = await this.movieRepository.findAll({
+      where: { director_id: id },
+      include: [
+        {
+          model: Person,
+          as: "director",
+          where: { id: id },
+        },
+      ],
+    });
+    return movies;
   }
 }
