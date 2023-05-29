@@ -55,14 +55,14 @@ export class Posts extends Model<Posts, PostCreationAttrs> {
 
   @ApiProperty({ example: "1", description: "Автор поста" })
   @ForeignKey(() => User)
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, allowNull: false })
   userId: number;
 
   @BelongsTo(() => User)
   author: User;
 
   @ForeignKey(() => Movie)
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, allowNull: false })
   movieId: number;
 
   @BelongsTo(() => Movie)

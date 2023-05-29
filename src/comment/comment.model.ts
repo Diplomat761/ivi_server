@@ -29,14 +29,14 @@ export class Comment extends Model<Comment, CommentCreationAttrs> {
   content: string;
 
   @ForeignKey(() => User)
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, allowNull: false })
   userId: number;
 
   @BelongsTo(() => User)
   author: User;
 
   @ForeignKey(() => Posts)
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, allowNull: false })
   postId: number;
 
   @BelongsTo(() => Posts)

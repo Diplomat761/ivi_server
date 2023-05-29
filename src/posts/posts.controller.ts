@@ -25,7 +25,7 @@ export class PostsController {
 
   @ApiOperation({ summary: "Создание поста" })
   @ApiResponse({ status: 200, type: Posts })
-  @Roles("ADMIN")
+  @Roles("ADMIN", "USER")
   @UseGuards(RolesGuard)
   @Post()
   @UseInterceptors(FileInterceptor("image"))
@@ -35,7 +35,7 @@ export class PostsController {
 
   @ApiOperation({ summary: "Получить все посты" })
   @ApiResponse({ status: 200, type: [Posts] })
-  @Roles("ADMIN")
+  @Roles("ADMIN", "USER")
   @UseGuards(RolesGuard)
   @Get()
   getAll() {
@@ -44,7 +44,7 @@ export class PostsController {
 
   @ApiOperation({ summary: "Получить один пост" })
   @ApiResponse({ status: 200, type: Posts })
-  @Roles("ADMIN")
+  @Roles("ADMIN", "USER")
   @UseGuards(RolesGuard)
   @Get("/id/:id")
   getOnePost(@Param("id") id: number) {
@@ -53,7 +53,7 @@ export class PostsController {
 
   @ApiOperation({ summary: "Редактировать пост" })
   @ApiResponse({ status: 200, type: Posts })
-  @Roles("ADMIN")
+  @Roles("ADMIN", "USER")
   @UseGuards(RolesGuard)
   @Put(":id")
   updatePost(@Param("id") id: number, @Body() dto: CreatePostDto) {
@@ -62,7 +62,7 @@ export class PostsController {
 
   @ApiOperation({ summary: "Удалить один пост" })
   @ApiResponse({ status: 200, type: Posts })
-  @Roles("ADMIN")
+  @Roles("ADMIN", "USER")
   @UseGuards(RolesGuard)
   @Delete(":id")
   deletePost(@Param("id") id: number) {
@@ -71,6 +71,8 @@ export class PostsController {
 
   @ApiOperation({ summary: "Найти уникальное имя поста" })
   @ApiResponse({ status: 200 })
+  @Roles("ADMIN", "USER")
+  @UseGuards(RolesGuard)
   @Get("unique")
   getUnique(@Query() { name }: { name: string }) {
     return this.postService.getUnique(name);
@@ -78,7 +80,7 @@ export class PostsController {
 
   @ApiOperation({ summary: "Найти группу поста" })
   @ApiResponse({ status: 200 })
-  @Roles("ADMIN")
+  @Roles("ADMIN", "USER")
   @UseGuards(RolesGuard)
   @Get("groups")
   fiendByGroup(@Query() { groupId }: { groupId: number }) {
