@@ -52,11 +52,15 @@ export class MoviesController {
     return this.movieService.getMoviesById(id);
   }
 
+  @Roles("ADMIN")
+  @UseGuards(RolesGuard)
   @Post()
   createMovie(@Body() movieDataList: any[]) {
     return this.movieService.createMovie(movieDataList);
   }
 
+  @Roles("ADMIN")
+  @UseGuards(RolesGuard)
   @Post("/movpers")
   createMoviePerson(@Body() moviePersonDataList: any[]) {
     return this.movieService.createMoviePerson(moviePersonDataList);
