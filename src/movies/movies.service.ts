@@ -278,6 +278,12 @@ export class MoviesService {
       case "year-desc":
         options.order = [["years", "DESC"]];
         break;
+      case "count_rating-asc":
+        options.order = [["count_rating", "ASC"]];
+        break;
+      case "count_rating-desc":
+        options.order = [["count_rating", "DESC"]];
+        break;
     }
 
     return this.movieRepository.findAll(options);
