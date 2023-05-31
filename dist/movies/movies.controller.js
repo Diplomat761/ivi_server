@@ -87,6 +87,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MoviesController.prototype, "getById", null);
 __decorate([
+    (0, roles_auth_decorator_1.Roles)("ADMIN"),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -94,6 +96,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MoviesController.prototype, "createMovie", null);
 __decorate([
+    (0, roles_auth_decorator_1.Roles)("ADMIN"),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, common_1.Post)("/movpers"),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
