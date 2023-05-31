@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MoviesModule = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
+const auth_module_1 = require("../auth/auth.module");
 const comment_model_1 = require("../comment/comment.model");
 const movie_person_model_1 = require("../person/movie-person.model");
 const person_model_1 = require("../person/person.model");
@@ -24,6 +25,7 @@ MoviesModule = __decorate([
         providers: [movies_service_1.MoviesService],
         imports: [
             sequelize_1.SequelizeModule.forFeature([movies_model_1.Movie, person_model_1.Person, movie_person_model_1.MoviePerson, comment_model_1.Comment]),
+            (0, common_1.forwardRef)(() => auth_module_1.AuthModule),
             person_module_1.PersonModule,
         ],
     })

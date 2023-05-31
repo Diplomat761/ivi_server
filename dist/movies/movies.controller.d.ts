@@ -1,3 +1,4 @@
+import { updateMovieDto } from "./dto/update-movie.dto";
 import { MoviesService } from "./movies.service";
 interface IFilter {
     genre: number;
@@ -13,6 +14,7 @@ interface IFilter {
 export declare class MoviesController {
     private movieService;
     constructor(movieService: MoviesService);
+    update(id: number, dto: updateMovieDto): Promise<void>;
     getMovieByActor(id: number): Promise<import("./movies.model").Movie[]>;
     getMovieByDirector(id: number): Promise<import("./movies.model").Movie[]>;
     getById(id: number): Promise<import("./movies.model").Movie>;

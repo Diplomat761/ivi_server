@@ -31,6 +31,16 @@ let MoviesService = class MoviesService {
         this.movieRepository = movieRepository;
         this.personService = personService;
     }
+    async update(id, dto) {
+        const [rowsGenre, [updatedGenre]] = await this.movieRepository.update(dto, {
+            returning: true,
+            where: { id },
+        });
+        if (rowsGenre === 0 || !updatedGenre) {
+            throw new common_1.NotFoundException("Такого жанра не существует");
+        }
+        throw new common_1.HttpException("Жанр изменен", common_1.HttpStatus.OK);
+    }
     async getMovieByActor(id) {
         const movies = await this.movieRepository.findAll({
             include: [

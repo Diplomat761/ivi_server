@@ -1,4 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { Movie } from "./movies.model";
 import { FindOptions, Op, Sequelize } from "sequelize";
@@ -11,6 +16,8 @@ import { User } from "src/users/users.model";
 import { Profile } from "src/profiles/profiles.model";
 import { Comment } from "src/comment/comment.model";
 import { PersonService } from "src/person/person.service";
+import { createMovieDto } from "./dto/create-movie.dto";
+import { updateMovieDto } from "./dto/update-movie.dto";
 
 @Injectable()
 export class MoviesService {
@@ -18,6 +25,17 @@ export class MoviesService {
     @InjectModel(Movie) private movieRepository: typeof Movie,
     private personService: PersonService
   ) {}
+
+  async update(id: number, dto: updateMovieDto) {
+    const [rowsGenre, [updatedGenre]] = await this.movieRepository.update(dto, {
+      returning: true,
+      where: { id },
+    });
+    if (rowsGenre === 0 || !updatedGenre) {
+      throw new NotFoundException("Такого жанра не существует");
+    }
+    throw new HttpException("Жанр изменен", HttpStatus.OK);
+  }
 
   async getMovieByActor(id: number) {
     const movies = await this.movieRepository.findAll({

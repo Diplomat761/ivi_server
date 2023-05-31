@@ -1,5 +1,6 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
+import { AuthModule } from "src/auth/auth.module";
 import { Comment } from "src/comment/comment.model";
 import { MoviePerson } from "src/person/movie-person.model";
 import { Person } from "src/person/person.model";
@@ -14,6 +15,7 @@ import { MoviesService } from "./movies.service";
   providers: [MoviesService],
   imports: [
     SequelizeModule.forFeature([Movie, Person, MoviePerson, Comment]),
+    forwardRef(() => AuthModule),
     PersonModule,
   ],
 })

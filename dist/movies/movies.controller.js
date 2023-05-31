@@ -14,10 +14,16 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MoviesController = void 0;
 const common_1 = require("@nestjs/common");
+const roles_auth_decorator_1 = require("../auth/utils/roles-auth.decorator");
+const roles_guard_1 = require("../auth/utils/roles.guard");
+const update_movie_dto_1 = require("./dto/update-movie.dto");
 const movies_service_1 = require("./movies.service");
 let MoviesController = class MoviesController {
     constructor(movieService) {
         this.movieService = movieService;
+    }
+    update(id, dto) {
+        return this.movieService.update(id, dto);
     }
     getMovieByActor(id) {
         return this.movieService.getMovieByActor(id);
@@ -49,6 +55,16 @@ let MoviesController = class MoviesController {
         return this.movieService.getFavoriteMovie();
     }
 };
+__decorate([
+    (0, roles_auth_decorator_1.Roles)("ADMIN"),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, common_1.Put)("/update/:id"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, update_movie_dto_1.updateMovieDto]),
+    __metadata("design:returntype", void 0)
+], MoviesController.prototype, "update", null);
 __decorate([
     (0, common_1.Get)("/actor/:id"),
     __param(0, (0, common_1.Param)("id")),

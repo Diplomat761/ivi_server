@@ -1,10 +1,12 @@
 import { Movie } from "./movies.model";
 import { MoviePerson } from "src/person/movie-person.model";
 import { PersonService } from "src/person/person.service";
+import { updateMovieDto } from "./dto/update-movie.dto";
 export declare class MoviesService {
     private movieRepository;
     private personService;
     constructor(movieRepository: typeof Movie, personService: PersonService);
+    update(id: number, dto: updateMovieDto): Promise<void>;
     getMovieByActor(id: number): Promise<Movie[]>;
     getMovieByDirector(id: number): Promise<Movie[]>;
     getMoviesById(id: number): Promise<Movie>;

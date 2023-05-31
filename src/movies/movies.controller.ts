@@ -1,4 +1,17 @@
-import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from "@nestjs/common";
+import { Roles } from "src/auth/utils/roles-auth.decorator";
+import { RolesGuard } from "src/auth/utils/roles.guard";
+import { createMovieDto } from "./dto/create-movie.dto";
+import { updateMovieDto } from "./dto/update-movie.dto";
 import { MoviesService } from "./movies.service";
 
 interface IFilter {
@@ -16,6 +29,13 @@ interface IFilter {
 @Controller("movies")
 export class MoviesController {
   constructor(private movieService: MoviesService) {}
+
+  @Roles("ADMIN")
+  @UseGuards(RolesGuard)
+  @Put("/update/:id")
+  update(@Param("id") id: number, @Body() dto: updateMovieDto) {
+    return this.movieService.update(id, dto);
+  }
 
   @Get("/actor/:id")
   getMovieByActor(@Param("id") id: number) {
