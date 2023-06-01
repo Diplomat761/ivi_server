@@ -136,7 +136,7 @@ let PersonService = class PersonService {
         const matchingDirectors = await this.personRepository.findAll({
             where: {
                 full_name: {
-                    [sequelize_2.Op.startsWith]: query,
+                    [sequelize_2.Op.iLike]: `${query}%`,
                 },
             },
         });

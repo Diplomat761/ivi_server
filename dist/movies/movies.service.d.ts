@@ -12,7 +12,7 @@ export declare class MoviesService {
     getMoviesById(id: number): Promise<Movie>;
     createMovie(movieDataList: any[]): Promise<Movie[]>;
     createMoviePerson(moviePersonDataList: any[]): Promise<MoviePerson[]>;
-    searchMovies(genres: number[], countries: number[], years: string, rating: number, sort: string, minRatingCount: number, maxRatingCount: number, page: number, directorName: string): Promise<Movie[]>;
+    searchMovies(genres: number[], countries: number[], years: string, rating: number, sort: string, minRatingCount: number, maxRatingCount: number, page: number, directorName: string, actorName: string): Promise<Movie[]>;
     getPromoMovie(): Promise<Movie[]>;
     getRecMovie(): Promise<Movie[]>;
     getFavoriteMovie(): Promise<Movie[]>;

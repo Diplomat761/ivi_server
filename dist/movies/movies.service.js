@@ -178,7 +178,7 @@ let MoviesService = class MoviesService {
         }
         return moviePersons;
     }
-    async searchMovies(genres, countries, years, rating, sort, minRatingCount, maxRatingCount, page, directorName) {
+    async searchMovies(genres, countries, years, rating, sort, minRatingCount, maxRatingCount, page, directorName, actorName) {
         const where = {};
         if (genres.length > 0) {
             where.genre_id = { [sequelize_2.Op.in]: genres };
@@ -206,6 +206,42 @@ let MoviesService = class MoviesService {
             const personIds = matchingPersons.map((directorName) => directorName.id);
             where.director_id = { [sequelize_2.Op.in]: personIds };
         }
+        if (actorName) {
+            return this.movieRepository.findAll({
+                include: [
+                    {
+                        model: person_model_1.Person,
+                        as: "actors",
+                        where: { full_name: { [sequelize_2.Op.iLike]: `${actorName}%` } },
+                        through: { attributes: [] },
+                        attributes: ["id", "avatar", "full_name", "description"],
+                    },
+                    {
+                        model: genre_model_1.Genre,
+                        as: "genre",
+                        attributes: ["id", "value", "value_EN"],
+                    },
+                    {
+                        model: country_model_1.Country,
+                        as: "country",
+                        attributes: ["id", "value", "value_EN"],
+                    },
+                ],
+                attributes: [
+                    "id",
+                    "avatars",
+                    "name",
+                    "original_name",
+                    "rating",
+                    "years",
+                    "durations",
+                    "description",
+                    "description_EN",
+                    "ageLimit",
+                    "count_rating",
+                ],
+            });
+        }
         const limit = 35;
         const offset = (page - 1) * limit;
         const options = {
@@ -213,20 +249,6 @@ let MoviesService = class MoviesService {
             offset,
             where,
             include: [
-                {
-                    model: person_model_1.Person,
-                    as: "actors",
-                    through: { attributes: [] },
-                    attributes: [
-                        "id",
-                        "avatar",
-                        "full_name",
-                        "full_name_EN",
-                        "description",
-                        "description_EN",
-                        "DOB",
-                    ],
-                },
                 {
                     model: person_model_1.Person,
                     as: "director",

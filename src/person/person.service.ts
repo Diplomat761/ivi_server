@@ -130,7 +130,7 @@ export class PersonService {
     const matchingDirectors = await this.personRepository.findAll({
       where: {
         full_name: {
-          [Op.startsWith]: query, // Поиск по началу имени
+          [Op.iLike]: `${query}%`,
         },
       },
     });

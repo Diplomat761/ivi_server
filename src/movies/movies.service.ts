@@ -190,7 +190,8 @@ export class MoviesService {
     minRatingCount: number,
     maxRatingCount: number,
     page: number,
-    directorName: string
+    directorName: string,
+    actorName: string
   ): Promise<Movie[]> {
     const where: any = {};
 
@@ -223,6 +224,43 @@ export class MoviesService {
       const personIds = matchingPersons.map((directorName) => directorName.id);
       where.director_id = { [Op.in]: personIds };
     }
+
+    if (actorName) {
+      return this.movieRepository.findAll({
+        include: [
+          {
+            model: Person,
+            as: "actors",
+            where: { full_name: { [Op.iLike]: `${actorName}%` } },
+            through: { attributes: [] },
+            attributes: ["id", "avatar", "full_name", "description"],
+          },
+          {
+            model: Genre,
+            as: "genre",
+            attributes: ["id", "value", "value_EN"],
+          },
+          {
+            model: Country,
+            as: "country",
+            attributes: ["id", "value", "value_EN"],
+          },
+        ],
+        attributes: [
+          "id",
+          "avatars",
+          "name",
+          "original_name",
+          "rating",
+          "years",
+          "durations",
+          "description",
+          "description_EN",
+          "ageLimit",
+          "count_rating",
+        ],
+      });
+    }
     const limit = 35; // Количество фильмов на странице
     const offset = (page - 1) * limit; // Смещение
 
@@ -231,20 +269,6 @@ export class MoviesService {
       offset,
       where,
       include: [
-        {
-          model: Person,
-          as: "actors",
-          through: { attributes: [] },
-          attributes: [
-            "id",
-            "avatar",
-            "full_name",
-            "full_name_EN",
-            "description",
-            "description_EN",
-            "DOB",
-          ],
-        },
         {
           model: Person,
           as: "director",

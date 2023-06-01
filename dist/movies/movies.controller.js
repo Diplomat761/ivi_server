@@ -40,10 +40,10 @@ let MoviesController = class MoviesController {
     createMoviePerson(moviePersonDataList) {
         return this.movieService.createMoviePerson(moviePersonDataList);
     }
-    async searchMovies({ genre, country, years, rating, sort, minRatingCount, maxRatingCount, page, directorName, }) {
+    async searchMovies({ genre, country, years, rating, sort, minRatingCount, maxRatingCount, page, directorName, actorName, }) {
         const genreIds = genre ? genre.toString().split(",").map(Number) : [];
         const countryIds = country ? country.toString().split(",").map(Number) : [];
-        return this.movieService.searchMovies(genreIds, countryIds, years, rating, sort, minRatingCount, maxRatingCount, page, directorName);
+        return this.movieService.searchMovies(genreIds, countryIds, years, rating, sort, minRatingCount, maxRatingCount, page, directorName, actorName);
     }
     getСarousel() {
         return this.movieService.getPromoMovie();
