@@ -24,6 +24,7 @@ export class AuthService {
     private profileService: ProfilesService
   ) {}
   // Входим в аккаунт
+  //
   async login(userDto: loginUserDto) {
     const user = await this.validateUser(userDto);
     return this.generateToken(user);
