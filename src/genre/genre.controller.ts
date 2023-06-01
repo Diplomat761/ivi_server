@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { Roles } from "src/auth/utils/roles-auth.decorator";
-import { RolesGuard } from "src/auth/utils/roles.guard";
+import { RolesGuard } from "src/auth/utils/guards/roles.guard";
 import { CreateGenreDto } from "./dto/create-genre.dto";
 import { UpdateGenreDto } from "./dto/update-genre.dto";
 import { GenreService } from "./genre.service";

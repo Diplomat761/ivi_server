@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { Roles } from "src/auth/utils/roles-auth.decorator";
-import { RolesGuard } from "src/auth/utils/roles.guard";
+import { RolesGuard } from "src/auth/utils/guards/roles.guard";
 import { createMovieDto } from "./dto/create-movie.dto";
 import { updateMovieDto } from "./dto/update-movie.dto";
 import { MoviesService } from "./movies.service";

@@ -13,7 +13,7 @@ import {
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Roles } from "src/auth/utils/roles-auth.decorator";
-import { RolesGuard } from "src/auth/utils/roles.guard";
+import { RolesGuard } from "src/auth/utils/guards/roles.guard";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { Posts } from "./posts.model";
 import { PostsService } from "./posts.service";

@@ -10,14 +10,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     @Inject("USER_SERVICE") private readonly userService: UsersService
   ) {
     super({
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: process.env.CALLBACK_URL,
+      clientID: process.env.CLIENT_ID_GOOGLE,
+      clientSecret: process.env.CLIENT_SECRET_GOOGLE,
+      callbackURL: process.env.CALLBACK_URL_GOOGLE,
       scope: ["profile", "email"],
     });
   }
 
   async validate(accessToken: string, refreshToken: string, profile: Profile) {
+    console.log(profile);
+
     if (!profile.emails[0].value || profile.emails[0].value.trim() === "") {
       throw new Error("Invalid email");
     }

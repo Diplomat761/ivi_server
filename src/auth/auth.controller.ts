@@ -4,7 +4,9 @@ import { ApiTags } from "@nestjs/swagger";
 import { loginUserDto } from "src/users/dto/login-user.dto";
 import { createUserDto } from "src/users/dto/create-user.dto";
 import { AuthService } from "./auth.service";
-import { GoogleAuthGuard } from "./utils/Google-auth.guard";
+
+import { VkAuthGuard } from "./utils/guards/Vk-auth.guard";
+import { GoogleAuthGuard } from "./utils/guards/Google-auth.guard";
 
 @ApiTags("Авторизация")
 @Controller("auth")
@@ -30,6 +32,17 @@ export class AuthController {
   @Get("google/redirect")
   @UseGuards(GoogleAuthGuard)
   googleRedirect(@Req() request: Request) {
+    return request.user;
+  }
+  @Get("vkontakte")
+  @UseGuards(VkAuthGuard)
+  async vkontakteLogin() {
+    return { msg: "vk" };
+  }
+
+  @Get("vkontakte/callback")
+  @UseGuards(VkAuthGuard)
+  async vkontakteCallback(@Req() request: Request) {
     return request.user;
   }
 }
